@@ -1,6 +1,7 @@
 const express = require('express');
 const moment = require('moment');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 let users = [];
 let users_api = [];
@@ -10,11 +11,17 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.get('/',function(req,res){
-	res.send('Hello World');
+	
+	if( !req.cookies.time){
+		
+		res.cookie('time',moment().format('LTS'),{maxAge:60000});
+	}
+	res.send(req.cookies.time);
+	console.log(req.cookies);
 });
 app.get('/home',function(req,res){
 	res.render('form.pug',{title:'wow'});
@@ -40,5 +47,12 @@ app.post('/api/users',function(req,res){
 });
 app.get('/api/users',function(req,res){
 	res.json(users_api);
+});
+app.get('/myroute/:param',function(req,res){
+	console.log(req.params.param);
+	console.log(req.query.param);
+	console.log(req.get('param'));
+	console.log(req.cookies.param);
+	res.send({param_param:req.params.param,query_param:req.query.param,header_param:req.get('param'),cookie_param:req.cookies.param});
 });
 app.listen(3000);
