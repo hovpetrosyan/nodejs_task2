@@ -1,0 +1,10 @@
+extends layout.pug
+
+block content
+		h1 Users' List
+		table
+			each user in users
+				tr
+					td #{user.username}
+					td #{user.password}
+						

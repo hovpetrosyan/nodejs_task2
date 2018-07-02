@@ -1,0 +1,23 @@
+extends layout.pug
+block content
+	form(action = '/form',method = 'post')
+		label(for='username') Username
+		br
+		input(name='username')
+		br
+		label(for='password') Password
+		br
+		input(name='password' type='password')
+		br
+		label(for='gender') Gender
+		br
+		label(for='male') Male
+		input(name = 'gender' type = 'radio' )
+		br
+		label(for='female') Female
+		input(name = 'gender' type = 'radio')
+		br
+		label(for='agree') agree with
+		input(name = 'agree' type= 'checkbox')
+		br
+		input(type='submit' value = 'Save')
